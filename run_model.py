@@ -3,6 +3,8 @@
 Created on Wed Jul 20 07:36:12 2016
 
 @author: rahulkumar
+
+Load the trained model and execute the result.
 """
 
 
@@ -16,7 +18,7 @@ import os, json
 ##Hyper parameters
 SCALE_NUM_TRIPS = 100000
 numiter = 10000000
-modelfile = os.getcwd() +'/runs/trained_model'
+modelfile = os.getcwd() +'/tmp/trained_model_test'
 npredictors = 46
 noutputs = 78 
 nhidden = 5
@@ -25,12 +27,12 @@ nhidden = 5
 def model(requirement= [ ]):
     
     jsondata = {
-               'Profile': ' ', 
+               'Topic': ' ', 
                'Prediction' : 0.0
                }
                
 #    data = pd.read_pickle(os.getcwd() +'/data')
-    data = pd.read_excel('recomndatation.xlsx', 'Raw v02', index_col=None, na_values=['NA'])
+    data = pd.read_excel('data.xlsx', 'Sheet1', index_col=None, na_values=['NA'])
     profile_names = data.columns.tolist()
     profile_names = profile_names[1:]
     
@@ -81,10 +83,11 @@ def model(requirement= [ ]):
 
     for profile, val in enumerate(predicted[0]):
         if val>thres:
-            jsondata = {'Profile': profile_names[profile], 'Prediction' : float(abs(val)*10)}
+            jsondata = {'Topic': profile_names[profile], 'Prediction' : 1}
             result.append(jsondata)
         else:
-            pass
+            jsondata = {'Topic': profile_names[profile], 'Prediction' : 0}
+            result.append(jsondata)
     jsonreturn = json.dumps(result)                    
     return jsonreturn
 
