@@ -28,18 +28,12 @@ def clean_str(string):
 
 
 def load_data_and_labels(data):
-     # Load data from files      
-    
+    # Load data, clean data      
     x_text =[]
- 
-    x_text = list(data['Requirement'])
- 
-                    
+    x_text = list(data['Topic'])
     # Split by words
     data = [clean_str(sent) for sent in x_text] 
     data = [s.split(" ") for s in data] 
-    
-    
     return [data]
 
 
@@ -78,7 +72,7 @@ def build_input_data(sentences, vocabulary):
     Maps sentencs and labels to vectors based on a vocabulary.
     """
     x = np.array([[vocabulary[word] for word in sentence] for sentence in sentences])
-#    y = np.array(labels)
+
     return [x]
 
 
@@ -94,9 +88,3 @@ def load_data(data):
     vocabulary, vocabulary_inv = build_vocab(sentences_padded)
     x = build_input_data(sentences_padded, vocabulary)
     return [x, vocabulary, vocabulary_inv] 
-# x= sentence in encoded form by its occurence, y= all labels/classes, vocabulary=dictionay of word --> apprarence, vocab_inv = soreted list of words  
-
-
-
-
-#x_test, y_test, vocabulary, vocabulary_inv = load_data()
