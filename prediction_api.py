@@ -3,25 +3,25 @@
 Created on Mon Jul 25 18:06:53 2016
 
 @author: rahulkumar
+
+Deploying model using web.py as a restfull service
 """
 
 import web
 import run_model
 
-
-
 urls = (
-    '/iproc', 'index'
+    '/topic', 'index'
 )
 
 class index:
     def GET(self):
         web.header('Content-Type','application/json') 
         
-        requirements = web.input(value=' ')
+        topic = web.input(value=' ')
 
         try:
-            output = run_model.model(requirement = [requirements.value])
+            output = run_model.model(requirement = [topic.value])
         except:
             output = 'Invalid query'
             pass
